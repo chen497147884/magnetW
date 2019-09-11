@@ -15,8 +15,10 @@ import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 
+import static java.util.regex.Pattern.*;
+
 @Configuration
-@PropertySource(value = "classpath:config.properties", encoding = "UTF-8")
+@PropertySource(value = "classpath:config.properties", encoding = "GBK")
 public class ApplicationConfig {
     private Logger logger = Logger.getLogger(getClass());
 
@@ -81,7 +83,7 @@ public class ApplicationConfig {
                 for (Field field : fields) {
                     Value valueAnnotation = field.getAnnotation(Value.class);
                     if (valueAnnotation != null) {
-                        Matcher matcher = Pattern.compile("(?<=\\{).+?(?=\\})").matcher(valueAnnotation.value());
+                        Matcher matcher = compile("(?<=\\{).+?(?=\\})").matcher(valueAnnotation.value());
                         if (matcher.find()) {
                             //用外部配置的值覆盖
                             String key = matcher.group();
